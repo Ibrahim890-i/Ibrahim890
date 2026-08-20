@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Burger King - Varian Menu</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4e9d8;
+      color: #502314;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #d62300;
+      color: #fff;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .menu-section, .detail-section {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #d62300;
+      border-bottom: 2px solid #f4e9d8;
+      padding-bottom: 8px;
+    }
+
+    .burger-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .burger-option:hover {
+      border-color: #f5a623;
+      background-color: #fffaf0;
+    }
+
+    .burger-option.active {
+      border-color: #d62300;
+      background-color: #ffebeb;
+      font-weight: bold;
+    }
+
+    .burger-name {
+      font-size: 1.1rem;
+    }
+
+    .burger-price {
+      color: #d62300;
+      font-weight: bold;
+    }
+
+    .detail-card {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .burger-tag {
+      display: inline-block;
+      background-color: #f5a623;
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      width: fit-content;
+    }
+
+    .burger-desc {
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .use-case-box {
+      background-color: #fffaf0;
+      border-left: 4px solid #f5a623;
+      padding: 12px 15px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .use-case-box h4 {
+      margin-bottom: 5px;
+      color: #502314;
+    }
+
+    .use-case-box p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Burger King</h1>
+    <p>Pilih Varian Burger Favoritmu</p>
+  </header>
+
+  <div class="container">
+    <!-- Kolom Kiri: Daftar Menu -->
+    <div class="menu-section">
+      <div class="section-title">Pilih Varian</div>
+      <div id="burger-list"></div>
+    </div>
+
+    <!-- Kolom Kanan: Detail & Penjelasan Kegunaan -->
+    <div class="detail-section">
+      <div class="section-title">Detail & Kegunaan Varian</div>
+      <div id="burger-detail" class="detail-card">
+        <!-- Konten detail akan diisi oleh JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const burgers = [
+      {
+        id: "whopper",
+        name: "Whopper",
+        price: "Rp 55.000",
+        tag: "Iconic Classic",
+        description: "Daging sapi panggang asli berukuran besar dilengkapi selada segar, tomat, acar, bawang bombay, dan saus mayones khas di atas roti wijen.",
+        useCase: "Sangat cocok untuk makan siang utama saat kamu lapar berat dan ingin menikmati cita rasa otentik daging panggang api khas Burger King."
+      },
+      {
+        id: "cheeseburger",
+        name: "Double Cheeseburger",
+        price: "Rp 45.000",
+        tag: "Keju Melimpah",
+        description: "Dua lapis daging sapi panggang diselingi keju leleh yang gurih, dilengkapi acar dan saus mustard-ketchup.",
+        useCase: "Ideal untuk pecinta keju yang menginginkan porsi sedang namun kaya rasa gurih di setiap gigitan."
+      },
+      {
+        id: "chicken-crispy",
+        name: "Crispy Chicken Burger",
+        price: "Rp 38.000",
+        tag: "Renyah & Gurih",
+        description: "Daging ayam fillet renyah berbumbu gurih dengan potongan selada segar dan mayones lembut.",
+        useCase: "Pilihan tepat jika kamu sedang tidak ingin makan daging sapi dan lebih menyukai tekstur renyah dengan rasa yang ringan."
+      },
+      {
+        id: "bbq-bacon",
+        name: "BBQ Beef Rasher",
+        price: "Rp 48.000",
+        tag: "Smoky Flavor",
+        description: "Daging sapi panggang ditambah lembaran beef rasher renyah, keju, dan siraman saus BBQ khas yang manis-gurih.",
+        useCase: "Cocok dimakan saat santai sore atau malam hari ketika menginginkan hidangan dengan aroma 'smoky' yang kuat dan rasa manis-gurih."
+      },
+      {
+        id: "plant-based",
+        name: "Plant-Based Whopper",
+        price: "Rp 52.000",
+        tag: "Bahan Nabati",
+        description: "Patty berbasis olahan tumbuhan dengan rasa dan tekstur menyerupai daging sapi asli, disajikan lengkap dengan sayuran segar.",
+        useCase: "Sangat baik untuk kamu yang ingin mengurangi konsumsi daging merah, bergaya hidup fleksitarian, namun tetap ingin menikmati sensasi makan burger."
+      }
+    ];
+
+    function renderMenuList() {
+      const listContainer = document.getElementById('burger-list');
+      listContainer.innerHTML = '';
+
+      burgers.forEach((burger, index) => {
+        const item = document.createElement('div');
+        item.className = `burger-option ${index === 0 ? 'active' : ''}`;
+        item.onclick = () => selectBurger(burger.id);
+        item.id = `option-${burger.id}`;
+        
+        item.innerHTML = `
+          <span class="burger-name">${burger.name}</span>
+          <span class="burger-price">${burger.price}</span>
+        `;
+        
+        listContainer.appendChild(item);
+      });
+    }
+
+    function selectBurger(burgerId) {
+      // Update tampilan tombol aktif
+      document.querySelectorAll('.burger-option').forEach(el => el.classList.remove('active'));
+      document.getElementById(`option-${burgerId}`).classList.add('active');
+
+      // Ambil data burger yang dipilih
+      const selected = burgers.find(b => b.id === burgerId);
+
+      // Render detail
+      const detailContainer = document.getElementById('burger-detail');
+      detailContainer.innerHTML = `
+        <span class="burger-tag">${selected.tag}</span>
+        <h2>${selected.name}</h2>
+        <p class="burger-price" style="font-size: 1.2rem;">${selected.price}</p>
+        <p class="burger-desc">${selected.description}</p>
+        
+        <div class="use-case-box">
+          <h4>Rekomendasi Kegunaan / Momen:</h4>
+          <p>${selected.useCase}</p>
+        </div>
+      `;
+    }
+
+    // Inisialisasi tampilan pertama kali
+    renderMenuList();
+    selectBurger(burgers[0].id);
+  </script>
+
+</body>
+</html>
